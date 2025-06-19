@@ -26,6 +26,9 @@ export default function AdminDashboard() {
 
   const fetchProducts = async () => {
     const { data, error } = await supabase.from("products").select("*")
+    if (error) {
+      console.error("Failed to fetch products:", error.message)
+    }
     if (data) setProducts(data)
   }
 
@@ -184,7 +187,7 @@ export default function AdminDashboard() {
             </tr>
           </thead>
           <tbody>
-            {products.map((product, index) => (
+            {filteredProducts.map((product, index) => (
               <tr
                 key={product.id}
                 className={`${index % 2 === 0 ? "bg-white" : "bg-gray-50"} hover:bg-gray-100 transition-colors`}
